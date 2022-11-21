@@ -1,56 +1,22 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
+    <my-header></my-header>
     <v-main>
-      <HelloWorld/>
     </v-main>
+    <my-footer></my-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    'my-header': Header,
+    'my-footer': Footer
   },
 
   data: () => ({
@@ -58,3 +24,45 @@ export default {
   }),
 };
 </script>
+
+<style lang="scss">
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+h1, h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+
+.background_image{
+    width: 100%;
+    height: 80%;
+    left: 300px;
+    position: absolute;
+    background-image: url( 'http://localhost:1337/uploads/Logo_Background_22cf4a31e9.svg');
+    opacity: 0.5;
+    background-repeat: repeat-y;
+    background-origin: content-box;
+    background-position: 900px 140px;
+    background-size: 1000px;
+}
+</style>
