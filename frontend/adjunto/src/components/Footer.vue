@@ -10,17 +10,17 @@
             <v-img class="d-inline-block mt-5" width="50%" alt="user" src="http://localhost:1337/uploads/Logo_adjunto_79a46c3032.svg"></v-img>
           </v-col>
         </v-row>
-        <v-row class="justify-center">
+        <v-row class="justify-center text-left">
           <v-col cols="2">
             <v-card-title class="mb-4">
               Contacto
             </v-card-title>
-            <v-card-text class="black--text text-left mb-n4">
+            <v-card-text class="black--text mb-n4">
               Rua Cruz de Pedra nº122
             </v-card-text>
             <v-card-title>
               <v-icon class="site_color">mdi-phone</v-icon>
-              &nbsp; 910313402
+              &nbsp; 912345678  
             </v-card-title>
             <v-card-actions>
               <v-btn class="site_color">
@@ -92,7 +92,7 @@
   }
   </script>
   
-  <style lang="scss">
+  <style>
   .site_color{
     color: #FF4E48 !important;
   }

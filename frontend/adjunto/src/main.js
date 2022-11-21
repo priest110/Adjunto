@@ -1,10 +1,27 @@
-import Vue from 'vue'
+/**
+ * main.js
+ *
+ * Bootstraps Vuetify and other plugins then mounts the App`
+ */
+
+// Components
 import App from './App.vue'
-import vuetify from './plugins/vuetify'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 
-Vue.config.productionTip = false
+// Composables
+import { createApp } from 'vue'
 
-new Vue({
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+// Plugins
+import { registerPlugins } from '@/plugins'
+
+const app = createApp(App)
+
+app
+    .component('MyHeader', Header)
+    .component('MyFooter', Footer)
+
+registerPlugins(app)
+
+app.mount('#app')
+
