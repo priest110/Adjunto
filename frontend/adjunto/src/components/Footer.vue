@@ -19,11 +19,11 @@
               Rua Cruz de Pedra nº122
             </v-card-text>
             <v-card-title>
-              <v-icon class="first_color">mdi-phone</v-icon>
+              <v-icon class="site_color">mdi-phone</v-icon>
               &nbsp; 910313402
             </v-card-title>
             <v-card-actions>
-              <v-btn class="first_color">
+              <v-btn class="site_color">
                 Contact us
               </v-btn>
             </v-card-actions>
@@ -34,11 +34,11 @@
             </v-card-title>
             <v-list v-for="(category, index) in categories" :key="index" flat width="240">
               <v-list-item class="mt-n6 ml-n2" :href='"https://www.adjunto.pt/category/" + category' target="_blank" >
-                <v-icon class="first_color">
+                <v-icon class="site_color">
                   mdi-menu-right-outline
                 </v-icon>
-                <v-list-item-content class="first_color">
-                  {{ category.name }}
+                <v-list-item-content class="site_color">
+                  {{ category.attributes.categoria }}
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -85,70 +85,17 @@
   
     methods: {
       async fetch_data(){
-        var categories_aux = await axios('https://adjunto.pt/wp-json/wp/v2/categories')
-        this.categories = categories_aux.data.splice(0, categories_aux.data.length-3)
-        var posts_aux = await axios('https://adjunto.pt/wp-json/artigos/v1/post')
-        this.posts = posts_aux.data
+        var categories_aux = await axios('http://localhost:1337/api/categorias')
+        this.categories = categories_aux.data.data
       }
     }
   }
   </script>
   
   <style lang="scss">
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
-  
-  .v-progress-circular {
-    margin: 1rem;
-  }
-  
-  h1, h2 {
-    font-weight: normal;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-  
-  a {
-    color: #42b983;
-  }
-  
-  .button_divider{
-    border-color: #FF4E48 !important;
-    width: 29%;
-    margin-left: 221px;
-  }
-  
-  .first_color{
+  .site_color{
     color: #FF4E48 !important;
   }
   
-  .out_of_margins{
-    width: 113.5% !important;
-  }
-  
-  .facebook_tag{
-    color: #0C88EF;
-  }
-  
-  .child { /* This is the item to center... */
-    display: inline-block;
-  }
-  .parent { /* ...and this is its parent container. */
-    text-align: center;
-  }
   
   </style>

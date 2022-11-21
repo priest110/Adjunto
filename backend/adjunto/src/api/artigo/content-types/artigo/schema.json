@@ -26,23 +26,22 @@
       "required": false
     },
     "media": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "comentarios": {
       "type": "json"
     },
-    "data": {
-      "type": "date"
-    },
     "likes": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "autor": {
       "type": "relation",
