@@ -20,7 +20,7 @@
             </v-card-text>
             <v-card-title>
               <v-icon class="site_color">mdi-phone</v-icon>
-              &nbsp; 912345678  
+              912345678  
             </v-card-title>
             <v-card-actions>
               <v-btn class="site_color">
@@ -32,8 +32,8 @@
             <v-card-title class="mb-5">
               Categorias
             </v-card-title>
-            <v-list v-for="(category, index) in categories" :key="index" flat width="240">
-              <v-list-item class="mt-n6 ml-n2" :href='"https://www.adjunto.pt/category/" + category' target="_blank" >
+            <v-list v-for="(category, index) in categories" :key="index" flat >
+              <v-list-item class="my-n2 ml-n2" :href='"https://www.adjunto.pt/category/" + category' target="_blank" >
                 <v-icon class="site_color">
                   mdi-menu-right-outline
                 </v-icon>

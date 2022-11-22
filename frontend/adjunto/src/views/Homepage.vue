@@ -17,9 +17,9 @@
         </v-row>
         <v-row class="justify-center">
           <v-col cols="2">
-          <v-card height="380" flat class="transparent_color">
+          <v-card height="100%" flat class="transparent_color">
             <v-list  v-for="(category, index) in categories" :key="index" flat width="240">
-              <v-list-item  class="mt-n3" :href='"https://www.adjunto.pt/category/" + category.atributes.categoria' target="_blank">
+              <v-list-item v-if="!(category.attributes.categoria === 'NBA')"  class="mt-n3 text-left" :href='"https://www.adjunto.pt/category/" + category.attributes.categoria' target="_blank">
                 <v-icon>
                   mdi-circle-medium
                 </v-icon>
@@ -27,10 +27,10 @@
                   {{ category.attributes.categoria }}
                 </v-list-item-content>
               </v-list-item>
-              <v-divider class="categories_divider"></v-divider>
+              <v-divider v-if="!(category.attributes.categoria === 'NBA')" class="categories_divider"></v-divider>
             </v-list>
-            <v-btn  x-large href="https://www.nba.com/" target="_blank" rounded width="30%" height="20" class="mt-5">
-              <v-img src="https://www.adjunto.pt/wp-content/uploads/2020/11/nbaSlider.jpg.jpg" width="240" class="rounded nba_margins"></v-img>
+            <v-btn  x-large href="https://www.nba.com/" target="_blank" class="nba_button">
+              <v-img src="http://localhost:1337/uploads/Logo_NBA_4f76b11c8c.svg" width="100px"></v-img>
             </v-btn>
           </v-card>
           </v-col>
@@ -52,8 +52,8 @@
             </template>
             <v-carousel-item v-for="(artigo, i) in artigos" :key="i" >
               <v-card :href="'https://www.adjunto.pt/' + artigo.attributes.titulo">
-                <v-img height="500" class="rounded-lg" v-if=" artigo.attributes.media != null" :src="artigo.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
-                  <v-card-title class="text-h4 white--text">
+                <v-img height="500" class="rounded-lg" v-if=" artigo.attributes.media != null" cover :src="'http://localhost:1337' + artigo.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
+                  <v-card-title class="text-h4 text-white">
                     <v-row align="end" style="height: 500px;">
                       <v-col>
                         <div>
@@ -65,7 +65,7 @@
                             <v-icon small color="#E9E9E9">
                               mdi-account
                             </v-icon>
-                            {{ artigo.attributes.autor.data[0].atributes.nome }}
+                            {{ artigo.attributes.autor.data.attributes.nome }}
                           </p>
                         </div>
                         <p class="text-left font-weight-bold">
@@ -75,7 +75,7 @@
                           <v-icon small color="#E9E9E9">
                             mdi-tag
                           </v-icon>
-                          {{ artigo.attributes.categorias.data[0].categoria}}
+                          {{ artigo.attributes.categorias.data[0].attributes.categoria}}
                         </div>
                       </v-col>
                     </v-row>
@@ -100,7 +100,7 @@
                   <v-carousel hide-delimiters height="400" class="rounded">
                     <v-carousel-item v-for="(artigo,i) in artigos" :key="i" >
                         <v-card color="black">
-                          <v-img v-if=" artigo.acf != 'false'" :src="artigo.attributes.media.data[0].attributes.url" height="250"></v-img>
+                          <v-img v-if=" artigo.acf != 'false'" :src="'http://localhost:1337' + artigo.attributes.media.data[0].attributes.url" height="250"></v-img>
                           <v-card-title class="text-h6 white--text">
                               <v-row class="fill-height flex-column" justify="space-between">
                                 <div>
@@ -182,7 +182,7 @@
   
             <v-tabs-items v-model="tab" class="transparent_color">
               <v-tab-item v-for="(category, index) in categories" :key="index">
-                <v-card class="my-5 mx-2"  v-for="(artigo, i) in artigos.filter(x => x.attributes.categorias.data.attributes.categoria.includes(category.name)).slice(10*(page-1),10*page)" :key="i">
+                <v-card class="my-5 mx-2"  v-for="(artigo, i) in artigos.filter(x => x.attributes.categorias.data[0].attributes.categoria.includes(category.name)).slice(10*(page-1),10*page)" :key="i">
                 <!--  <v-img v-if="(typeof artigo.acf.imagem !== 'false' && typeof artigo.acf.url === 'undefined')" :src="artigo.acf.imagem.url"></v-img>
                   <iframe v-if="(typeof artigo.acf.url !== 'undefined')" style="width:100%;height:500px" :src="'https://youtube.com/embed/' + artigo.acf.url.split('/')[3]" frameborder="0" allowfullscreen></iframe> -->
                   <v-card-text class="text-body-1 text-left">
@@ -193,7 +193,7 @@
                     <v-icon small>
                       mdi-account
                     </v-icon>
-                    {{ artigo.attributes.autor.data[0].atributes.nome }}
+                    {{ artigo.attributes.autor.data.attributes.nome }}
                   </v-card-text>
   
                   <v-card-title class="mt-n3 font-weight-black text-h4">
@@ -223,7 +223,7 @@
                   </v-card-text>
                 </v-card>
                 <div class="text-center">
-                  <v-pagination v-model="page" :length="Math.floor(artigos.filter(x => x.attributes.categorias.data.attributes.categoria.includes(category.name)).length / 10) + 1" class="first_color rounded"></v-pagination>
+                  <v-pagination v-model="page" :length="Math.floor(artigos.filter(x => x.attributes.categorias.data[0].attributes.categoria.includes(category.name)).length / 10) + 1" class="first_color rounded"></v-pagination>
                 </div>
               </v-tab-item>
             </v-tabs-items>
@@ -261,22 +261,14 @@
         var categories_aux = await axios('http://localhost:1337/api/categorias')
         this.categories = categories_aux.data.data
         var artigos_aux = await axios('http://localhost:1337/api/artigos?populate=*')
-        this.artigos = artigos_aux.data
+        this.artigos = artigos_aux.data.data
         this.valid = true
       }
     }
   }
   </script>
   
-  <style lang="scss">
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
+  <style>
   
   h1, h2 {
     font-weight: normal;
@@ -312,8 +304,13 @@
     width: 113.5% !important;
   }
   
-  .nba_margins{
-    margin-left: 150px;
+  .nba_button{
+    height: 50px !important;
+    width: 80%;
+    left: 0;
+    position: absolute;
+    background-color: red;
+    border-radius:12px;
   }
   
   .transparent_color{

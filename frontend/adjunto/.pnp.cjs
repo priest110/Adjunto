@@ -42,6 +42,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite", "virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:3.2.4"],
             ["vite-plugin-vuetify", "virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:1.0.0"],
             ["vue", "npm:3.2.45"],
+            ["vue-router", "virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:4.1.6"],
             ["vuetify", "virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:3.0.1"],
             ["webfontloader", "npm:1.6.28"]
           ],
@@ -235,6 +236,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@vue/devtools-api", [
+        ["npm:6.4.5", {
+          "packageLocation": "./.yarn/cache/@vue-devtools-api-npm-6.4.5-bcd56e5fec-40c5adc878.zip/node_modules/@vue/devtools-api/",
+          "packageDependencies": [
+            ["@vue/devtools-api", "npm:6.4.5"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@vue/reactivity", [
         ["npm:3.2.45", {
           "packageLocation": "./.yarn/cache/@vue-reactivity-npm-3.2.45-bc3378a52c-4ba609744a.zip/node_modules/@vue/reactivity/",
@@ -364,6 +374,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite", "virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:3.2.4"],
             ["vite-plugin-vuetify", "virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:1.0.0"],
             ["vue", "npm:3.2.45"],
+            ["vue-router", "virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:4.1.6"],
             ["vuetify", "virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:3.0.1"],
             ["webfontloader", "npm:1.6.28"]
           ],
@@ -1988,6 +1999,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@vue/runtime-dom", "npm:3.2.45"],
             ["@vue/server-renderer", "virtual:06b4b60efe017e0fdf8405fef0e04a64d7dc86cf13e04f05fb681889d996c75efd151033b2e012c72dfb9a0b8d1a647b6d3a8115078891aebe2fa1a4e81f50bf#npm:3.2.45"],
             ["@vue/shared", "npm:3.2.45"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["vue-router", [
+        ["npm:4.1.6", {
+          "packageLocation": "./.yarn/cache/vue-router-npm-4.1.6-ccab7109e1-c7f0156ac0.zip/node_modules/vue-router/",
+          "packageDependencies": [
+            ["vue-router", "npm:4.1.6"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:4.1.6", {
+          "packageLocation": "./.yarn/__virtual__/vue-router-virtual-6aab8a2fda/0/cache/vue-router-npm-4.1.6-ccab7109e1-c7f0156ac0.zip/node_modules/vue-router/",
+          "packageDependencies": [
+            ["vue-router", "virtual:da5c5894b7c87d3e8c3b7160ae3adcd4bf47d05cdf18f9da2dff36b790a032fd832394a2fbec8b46589a237ed60191c4d01eb808545ea321835ad55f8c2c7d69#npm:4.1.6"],
+            ["@types/vue", null],
+            ["@vue/devtools-api", "npm:6.4.5"],
+            ["vue", "npm:3.2.45"]
+          ],
+          "packagePeers": [
+            "@types/vue",
+            "vue"
           ],
           "linkType": "HARD",
         }]

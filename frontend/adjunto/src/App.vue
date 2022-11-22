@@ -2,6 +2,7 @@
   <v-app>
     <MyHeader></MyHeader>
     <v-main>
+      <router-view />
     </v-main>
     <MyFooter></MyFooter>
   </v-app>
