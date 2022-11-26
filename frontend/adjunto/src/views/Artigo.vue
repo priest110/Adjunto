@@ -19,7 +19,7 @@
           <v-col cols="2">
           <v-card height="100%" flat class="transparent_color">
             <v-list  v-for="(category, index) in categories" :key="index" flat width="240">
-              <v-list-item v-if="!(category.attributes.categoria === 'NBA')"  class="mt-n3 text-left" :href='"http://localhost:3000/categoria/" + category.attributes.slug' >
+              <v-list-item v-if="!(category.attributes.categoria === 'NBA')"  class="mt-n3 text-left" :href='"https://www.adjunto.pt/category/" + category.attributes.categoria' target="_blank">
                 <v-icon>
                   mdi-circle-medium
                 </v-icon>
@@ -36,22 +36,28 @@
           </v-col>
           <v-col cols="6" >
           <v-carousel cycle hide-delimiter-background hide-delimiters show-arrows-on-hover >
-            <template v-slot:prev="{ props }">
-              <v-btn icon="mdi-arrow-left" color="#FF4E48" @click="props.onClick">
+            <template v-slot:prev="{ on, attrs }">
+              <v-btn fab color="#FF4E48" v-bind="attrs" v-on="on">
+                <v-icon>
+                  mdi-arrow-left
+                </v-icon>
               </v-btn>
             </template>
-            <template v-slot:next="{ props }">
-              <v-btn icon="mdi-arrow-right" color="#FF4E48" @click="props.onClick">
+            <template v-slot:next="{ on, attrs }">
+              <v-btn fab color="#FF4E48" v-bind="attrs" v-on="on">
+                <v-icon>
+                  mdi-arrow-right
+                </v-icon>
               </v-btn>
             </template>
             <v-carousel-item v-for="(artigo, i) in artigos" :key="i" >
-              <v-card :href="'http://localhost:3000/artigo/' + artigo.attributes.slug">
-                <v-img height="500" cover class="rounded-lg" v-if=" artigo.attributes.media != null" :src="'http://localhost:1337' + artigo.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
+              <v-card :href="'https://www.adjunto.pt/' + artigo.attributes.titulo">
+                <v-img height="500" class="rounded-lg" v-if=" artigo.attributes.media != null" cover :src="'http://localhost:1337' + artigo.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
                   <v-card-title class="text-h4 text-white">
                     <v-row align="end" style="height: 500px;">
                       <v-col>
                         <div>
-                          <p class="text-body-1 text-left" color="#E9E9E9">
+                          <p class="ma-0 text-body-1 text-left" color="#E9E9E9">
                             <v-icon small color="#E9E9E9">
                               mdi-calendar
                             </v-icon>
@@ -62,10 +68,10 @@
                             {{ artigo.attributes.autor.data.attributes.nome }}
                           </p>
                         </div>
-                        <p class="my-2 text-left font-weight-bold">
+                        <p class="text-left font-weight-bold">
                           {{ artigo.attributes.titulo }}
                         </p>
-                        <div class="text-body-1 text-left" color="#E9E9E9">
+                        <div class="ma-0 text-body-1 text-left" color="#E9E9E9">
                           <v-icon small color="#E9E9E9">
                             mdi-tag
                           </v-icon>
@@ -169,16 +175,16 @@
           <v-col cols="6">
           <v-card flat class="transparent_color">
             <v-tabs v-model="tab" color="#FF4E48" class="transparent_color">
-              <v-tab class="text-body-1 transparent_color" v-for="(category, index) in categories" :key="index" :value="'tab-' + index">
+              <v-tab class="text-body-1 transparent_color" v-for="(category, index) in categories" :key="index">
                 {{ category.attributes.categoria }}
               </v-tab>
             </v-tabs>
   
-            <v-window v-model="tab" class="transparent_color">
-              <v-window-item v-for="(category, index) in categories" :key="index" :value="'tab-' + index">
+            <v-tabs-items v-model="tab" class="transparent_color">
+              <v-tab-item v-for="(category, index) in categories" :key="index">
                 <v-card class="my-5 mx-2"  v-for="(artigo, i) in artigos.filter(x => x.attributes.categorias.data[0].attributes.categoria.includes(category.name)).slice(10*(page-1),10*page)" :key="i">
-                  <v-img height="500" cover class="rounded-lg" :src="'http://localhost:1337' + artigo.attributes.media.data[0].attributes.url"></v-img>
-                  <!--<iframe v-if="(typeof artigo.acf.url !== 'undefined')" style="width:100%;height:500px" :src="'https://youtube.com/embed/' + artigo.acf.url.split('/')[3]" frameborder="0" allowfullscreen></iframe> -->
+                <!--  <v-img v-if="(typeof artigo.acf.imagem !== 'false' && typeof artigo.acf.url === 'undefined')" :src="artigo.acf.imagem.url"></v-img>
+                  <iframe v-if="(typeof artigo.acf.url !== 'undefined')" style="width:100%;height:500px" :src="'https://youtube.com/embed/' + artigo.acf.url.split('/')[3]" frameborder="0" allowfullscreen></iframe> -->
                   <v-card-text class="text-body-1 text-left">
                     <v-icon small>
                       mdi-calendar
@@ -190,7 +196,7 @@
                     {{ artigo.attributes.autor.data.attributes.nome }}
                   </v-card-text>
   
-                  <v-card-title class="mt-n3 font-weight-black text-h4 text-left">
+                  <v-card-title class="mt-n3 font-weight-black text-h4">
                     {{ artigo.attributes.titulo }}
                   </v-card-title>
   
@@ -204,7 +210,7 @@
                         <v-icon small color="#FF4E48">
                           mdi-tag
                         </v-icon>
-                        {{ artigo.attributes.categorias.data[0].attributes.categoria }}
+                        {{ artigo.attributes.categorias.data[0].atributes.categoria }}
                       </v-col>
                       <v-spacer></v-spacer>
                       <v-col cols="2">
@@ -219,8 +225,8 @@
                 <div class="text-center">
                   <v-pagination v-model="page" :length="Math.floor(artigos.filter(x => x.attributes.categorias.data[0].attributes.categoria.includes(category.name)).length / 10) + 1" class="first_color rounded"></v-pagination>
                 </div>
-              </v-window-item>
-            </v-window>
+              </v-tab-item>
+            </v-tabs-items>
           </v-card>
           </v-col>
         </v-row>
@@ -264,6 +270,23 @@
   
   <style>
   
+  h1, h2 {
+    font-weight: normal;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  
+  a {
+    color: #42b983;
+  }
   
   .categories_divider{
     border-color: #FF4E48 !important;
@@ -290,7 +313,11 @@
     border-radius:12px;
   }
   
-  .v-tabs-bar, .transparent_color{
+  .transparent_color{
+    background-color: transparent !important;
+  }
+  
+  .v-tabs-bar{
     background-color: transparent !important;
   }
   

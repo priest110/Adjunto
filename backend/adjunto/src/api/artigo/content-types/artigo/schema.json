@@ -50,6 +50,9 @@
     },
     "hashtags": {
       "type": "json"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }
