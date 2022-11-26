@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Home from "../views/Homepage.vue"
-import Artigo from "../views/Artigo.vue"
-import Categoria from "../views/Categoria.vue"
-import Contacto from "../views/Contacto.vue"
+import Article from "../views/Article.vue"
+import Category from "../views/Category.vue"
+import Contacts from "../views/Contacts.vue"
 import NotFound from "../views/NotFound.vue"
 
 const routes = [
@@ -14,18 +14,18 @@ const routes = [
     },
     {
         path: "/categoria/:id",
-        name: "Categoria",
-        component: Categoria
+        name: "Category",
+        component: Category
     },
     {
         path: "/artigo/:id",
-        name: "Artigo",
-        component: Artigo
+        name: "Article",
+        component: Article
     },
     {
         path: "/contacto",
-        name: "Contacto",
-        component: Contacto
+        name: "Contacts",
+        component: Contacts
     },
     {
         path: "/:pathMatch(.*)*",

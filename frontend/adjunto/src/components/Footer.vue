@@ -38,7 +38,7 @@
                   mdi-menu-right-outline
                 </v-icon>
                 <v-list-item-content class="site_color">
-                  {{ category.attributes.categoria }}
+                  {{ category.attributes.tipo }}
                 </v-list-item-content>
               </v-list-item>
             </v-list>

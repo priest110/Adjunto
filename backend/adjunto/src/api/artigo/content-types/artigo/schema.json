@@ -16,9 +16,9 @@
       "type": "string",
       "required": true
     },
-    "categorias": {
+    "categoria": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::categoria.categoria"
     },
     "descricao": {
