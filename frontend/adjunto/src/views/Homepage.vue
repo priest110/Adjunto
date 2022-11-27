@@ -5,81 +5,81 @@
       </div>
       <div v-else>
         <v-row class="justify-center">
-        <v-col cols="2">
-        </v-col>
-        <v-col cols="6" >
-          <p class="text-h3 text-left">
-            Última Hora
-          </p>
-        </v-col>
-        <v-col cols="2">
-        </v-col>
+          <v-col cols="2">
+          </v-col>
+          <v-col cols="6" >
+            <p class="text-h3 text-left">
+              Última Hora
+            </p>
+          </v-col>
+          <v-col cols="2">
+          </v-col>
         </v-row>
         <v-row class="justify-center">
           <v-col cols="2">
-          <v-card height="100%" flat class="transparent_color">
-            <v-list  v-for="(category, index) in categories" :key="index" flat width="240">
-              <v-list-item v-if="!(category.attributes.tipo === 'NBA')"  class="mt-n3 text-left" :href='"http://localhost:3000/categoria/" + category.attributes.slug' >
-                <v-icon>
-                  mdi-circle-medium
-                </v-icon>
-                <v-list-item-content>
-                  {{ category.attributes.tipo }}
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider v-if="!(category.attributes.tipo === 'NBA')" class="categories_divider"></v-divider>
-            </v-list>
-            <v-btn  x-large href="https://www.nba.com/" target="_blank" class="nba_button">
-              <v-img src="http://localhost:1337/uploads/Logo_NBA_4f76b11c8c.svg" width="100px"></v-img>
-            </v-btn>
-          </v-card>
+            <v-card height="100%" flat class="transparent_color">
+              <v-list  v-for="(category, index) in categories" :key="index" flat width="240">
+                <v-list-item v-if="!(category.attributes.tipo === 'NBA')"  class="mt-n3 text-left" :href='"http://localhost:3000/categoria/" + category.attributes.slug' >
+                  <v-icon>
+                    mdi-circle-medium
+                  </v-icon>
+                  <v-list-item-content>
+                    {{ category.attributes.tipo }}
+                  </v-list-item-content>
+                </v-list-item>
+                <v-divider v-if="!(category.attributes.tipo === 'NBA')" class="categories_divider"></v-divider>
+              </v-list>
+              <v-btn  x-large href="https://www.nba.com/" target="_blank" class="nba_button">
+                <v-img src="http://localhost:1337/uploads/Logo_NBA_4f76b11c8c.svg" width="100px"></v-img>
+              </v-btn>
+            </v-card>
           </v-col>
           <v-col cols="6" >
-          <v-carousel cycle hide-delimiter-background hide-delimiters show-arrows-on-hover >
-            <template v-slot:prev="{ props }">
-              <v-btn icon="mdi-arrow-left" color="#FF4E48" @click="props.onClick">
-              </v-btn>
-            </template>
-            <template v-slot:next="{ props }">
-              <v-btn icon="mdi-arrow-right" color="#FF4E48" @click="props.onClick">
-              </v-btn>
-            </template>
-            <v-carousel-item v-for="(article, i) in articles" :key="i" >
-              <router-link :to="'artigo/' + article.attributes.slug">
-                <v-card>
-                  <v-img height="500" cover class="rounded-lg" v-if=" article.attributes.media != null" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
-                    <v-card-title class="text-h4 text-white">
-                      <v-row align="end" style="height: 500px;">
-                        <v-col>
-                          <div>
-                            <p class="text-body-1 text-left" color="#E9E9E9">
-                              <v-icon small color="#E9E9E9">
-                                mdi-calendar
-                              </v-icon>
-                              {{ article.attributes.createdAt.substr(0,10) }}
-                              <v-icon small color="#E9E9E9">
-                                mdi-account
-                              </v-icon>
-                              {{ article.attributes.autor.data.attributes.nome }}
+            <v-carousel cycle hide-delimiter-background hide-delimiters show-arrows-on-hover >
+              <template v-slot:prev="{ props }">
+                <v-btn icon="mdi-arrow-left" color="#FF4E48" @click="props.onClick">
+                </v-btn>
+              </template>
+              <template v-slot:next="{ props }">
+                <v-btn icon="mdi-arrow-right" color="#FF4E48" @click="props.onClick">
+                </v-btn>
+              </template>
+              <v-carousel-item v-for="(article, i) in articles" :key="i" >
+                <router-link :to="'artigo/' + article.attributes.slug">
+                  <v-card>
+                    <v-img height="500" cover class="rounded-lg" v-if=" article.attributes.media != null" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
+                      <v-card-title class="text-h4 text-white">
+                        <v-row align="end" style="height: 500px;">
+                          <v-col>
+                            <div>
+                              <p class="text-body-1 text-left" color="#E9E9E9">
+                                <v-icon small color="#E9E9E9">
+                                  mdi-calendar
+                                </v-icon>
+                                {{ article.attributes.createdAt.substr(0,10) }}
+                                <v-icon small color="#E9E9E9">
+                                  mdi-account
+                                </v-icon>
+                                {{ article.attributes.autor.data.attributes.nome }}
+                              </p>
+                            </div>
+                            <p class="my-2 text-left font-weight-bold">
+                              {{ article.attributes.titulo }}
                             </p>
-                          </div>
-                          <p class="my-2 text-left font-weight-bold">
-                            {{ article.attributes.titulo }}
-                          </p>
-                          <div class="text-body-1 text-left" color="#E9E9E9">
-                            <v-icon small color="#E9E9E9">
-                              mdi-tag
-                            </v-icon>
-                            {{ article.attributes.categoria.data.attributes.tipo}}
-                          </div>
-                        </v-col>
-                      </v-row>
-                    </v-card-title>
-                  </v-img>
-                </v-card>
-              </router-link>
-            </v-carousel-item>
-          </v-carousel>
+                            <div class="text-body-1 text-left" color="#E9E9E9">
+                              <v-icon small color="#E9E9E9">
+                                mdi-tag
+                              </v-icon>
+                              {{ article.attributes.categoria.data.attributes.tipo }}
+                            </div>
+                          </v-col>
+                        </v-row>
+                      </v-card-title>
+                    </v-img>
+                  </v-card>
+                </router-link>
+              </v-carousel-item>
+            </v-carousel>
           </v-col>
           <v-col cols="2" >
             <v-expansion-panels v-model="plane">
@@ -241,9 +241,7 @@
   export default {
     data () {
       return {
-        selectedItem: 1,
         categories: [],
-        categories_tabs: [],
         articles: [],
         plane: 0,
         tab: null,
