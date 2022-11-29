@@ -68,28 +68,25 @@
       </v-row>
       <v-row class="justify-center">
         <v-col cols="6">
-          <v-card class="mb-5" >
-            <v-card-title>
+          <v-card class="mb-5 text-left" >
+            <v-card-title class="d-flex align-center">
               &nbsp;
               <v-icon>
                 mdi-calendar
               </v-icon>
+              &nbsp;
               {{ article.attributes.createdAt.substr(0,10) }}
               &nbsp;&nbsp;&nbsp;
               <v-icon color="#FF4E48">
                 mdi-tag
               </v-icon> 
+              &nbsp;
               <span class="first_color">
                 {{ article.attributes.categoria.data.attributes.tipo }}
               </span>
               <v-spacer></v-spacer>
-              <v-btn :disabled="disabled_active" :input-value="like_active" plain @click="change_likes()">
-                <v-icon class="first_color">
-                  mdi-heart-outline
-                </v-icon>
-              </v-btn>
-              &nbsp;
-              <span class="text-h5 ml-n5">
+              <span>
+                <v-btn :disabled="disabled_active" :input-value="like_active" icon="mdi-heart-outline" class="first_color mr-n1 mt-n1" variant="text" @click="change_likes()"></v-btn>
                 {{ article.attributes.likes }}
               </span>
               &nbsp;
@@ -98,7 +95,7 @@
             <v-divider></v-divider>
 
             <v-card-text class="text-left text-h5">
-              &nbsp; {{ article.attributes.descricao }}
+              {{ article.attributes.descricao }}
             </v-card-text>
           
             <v-divider v-if="(hashtags != null)"></v-divider>
@@ -111,57 +108,56 @@
             </v-card-title> 
           </v-card>
 
-          <v-card class="mb-5">
+          <v-card class="mb-5 text-left">
             <v-expansion-panels v-model="plane" flat>
               <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate>
-                  <p class="text-h5 mb-1">Comentários</p>
+                <v-expansion-panel-title color="#FF4E48" disable-icon-rotate>
+                  <p class="text-h5 text-white">Comentários</p>
                   <template v-slot:actions>
                     <v-icon color="">
                       mdi-window-minimize
                     </v-icon>
                   </template>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <v-row class="mx-n6">
-                    <v-divider class="mb-7"></v-divider>
-                  </v-row>
+                </v-expansion-panel-title>
+                <v-expansion-panel-text>
                   <v-row class="mt-2">
                     <v-col cols="2">
-                      <v-avatar tile v-if="autor.attributes.avatar != null" :image="'http://localhost:1337' + autor.attributes.avatar.data.attributes.url" size="80" class="ml-2 mt-3 rounded-lg"></v-avatar>
+                      <v-avatar tile v-if="autor.attributes.avatar != null" :image="'http://localhost:1337' + autor.attributes.avatar.data.attributes.url" size="80" class="ml-5 rounded-lg"></v-avatar>
                     </v-col>
-                    <v-col class="ml-n4">
-                      <v-card-title class="mt-n5 first_color">
+                    <v-col class="ml-n10">
+                      <v-card-subtitle class="text-h6 first_color">
                         Autor
-                      </v-card-title>
-                      <v-card-title class="mt-n10 text-h6 text-left">
+                      </v-card-subtitle>
+                      <v-card-title class="text-h6">
                         {{ autor.attributes.nome }}
                       </v-card-title>
                     </v-col>
                   </v-row>
-                  <v-card-text class="text-left mt-n8">
-                    {{ autor.attributes.descricao }}
+                  <v-card-text class="text-left">
+                    {{ autor.attributes.bio }}
                   </v-card-text>
-                  <v-card-actions  v-if="!answer_active" class="my-n3">
-                    <v-btn text color="#FF4E48" class="mr-n4" @click="change">
+                  <v-card-actions v-if="!answer_active" class="my-n3">
+                    <v-btn color="#FF4E48" class="mr-n4" @click="change">
                       Responder 
-                      <v-icon> mdi-android-messages </v-icon>
+                      &nbsp;
+                      <v-icon> mdi-message-text-outline </v-icon>
                     </v-btn>
                   </v-card-actions>
                   <v-form v-else id="form_answer">
                     <v-row>
                       <v-col>
-                        <v-text-field name="nome" color="#FF4E48" outlined label="Nome"></v-text-field>
+                        <v-text-field name="nome" outlined label="Nome"></v-text-field>
                       </v-col>
                       <v-col>
-                        <v-text-field name="email" color="#FF4E48" outlined label="Email"></v-text-field>
+                        <v-text-field name="email" outlined label="Email"></v-text-field>
                       </v-col>
                     </v-row>
-                    <v-textarea counter :rules="comment_rules" name="comentario" color="#FF4E48" outlined label="Escreve o teu comentário"></v-textarea>
+                    <v-textarea counter :rules="comment_rules" name="comentario" outlined label="Escreve o teu comentário"></v-textarea>
                     <v-row class="justify-start">
-                      <v-btn text color="#FF4E48" class="ml-3 mb-3" >
-                        Comentar 
-                        <v-icon>mdi-android-messages</v-icon>
+                      <v-btn color="#FF4E48" class="ml-3 mb-3" >
+                        <span class="text-white">Comentar</span> 
+                        &nbsp;
+                        <v-icon color="white"> mdi-message-text-outline </v-icon>
                       </v-btn>
                       <v-btn text class="ml-3 mb-3" @click="change()">
                         Cancelar
@@ -195,7 +191,7 @@
                       </v-card>
                     </v-list-item>
                   </v-list>
-                </v-expansion-panel-content>
+                </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
           </v-card>
@@ -203,15 +199,15 @@
           <v-card class="mb-5">
             <v-expansion-panels v-model="plane2" flat>
               <v-expansion-panel>
-                <v-expansion-panel-header disable-icon-rotate>
+                <v-expansion-panel-title disable-icon-rotate>
                   <p class="text-h5 mb-1">Adicionar comentário</p>
                   <template v-slot:actions>
                     <v-icon color="">
                       mdi-window-minimize
                     </v-icon>
                   </template>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
+                </v-expansion-panel-title>
+                <v-expansion-panel-text>
                   <v-row class="mx-n6">
                   <v-divider class="mb-7"></v-divider>
                   </v-row>
@@ -232,7 +228,7 @@
                       </v-btn>
                     </v-row>                
                   </v-form>
-                </v-expansion-panel-content>
+                </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
           </v-card>
