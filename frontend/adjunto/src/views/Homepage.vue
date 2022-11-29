@@ -35,19 +35,11 @@
             </v-card>
           </v-col>
           <v-col cols="6" >
-            <v-carousel cycle hide-delimiter-background hide-delimiters show-arrows-on-hover >
-              <template v-slot:prev="{ props }">
-                <v-btn icon="mdi-arrow-left" color="#FF4E48" @click="props.onClick">
-                </v-btn>
-              </template>
-              <template v-slot:next="{ props }">
-                <v-btn icon="mdi-arrow-right" color="#FF4E48" @click="props.onClick">
-                </v-btn>
-              </template>
+            <v-carousel hide-delimiter-background hide-delimiters show-arrows="hover" class="carousel_principal">
               <v-carousel-item v-for="(article, i) in articles" :key="i" >
                 <router-link :to="'artigo/' + article.attributes.slug">
                   <v-card>
-                    <v-img height="500" cover class="rounded-lg" v-if=" article.attributes.media != null" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
+                    <v-img height="500" cover class="rounded-lg" v-if="article.attributes.media != null" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
                       <v-card-title class="text-h4 text-white">
                         <v-row align="end" style="height: 500px;">
                           <v-col>
@@ -63,7 +55,7 @@
                                 {{ article.attributes.autor.data.attributes.nome }}
                               </p>
                             </div>
-                            <p class="my-2 text-left font-weight-bold">
+                            <p class="title_article my-2 text-left font-weight-bold">
                               {{ article.attributes.titulo }}
                             </p>
                             <div class="text-body-1 text-left" color="#E9E9E9">
@@ -83,86 +75,78 @@
           </v-col>
           <v-col cols="2" >
             <v-expansion-panels v-model="plane">
-              <v-expansion-panel class="black" >
-                <v-expansion-panel-header disable-icon-rotate>
-                  <p class="text-h5 white--text">Mercado</p>
+              <v-expansion-panel style="background-color:black;" >
+                <v-expansion-panel-title disable-icon-rotate>
+                  <p class="text-h5 text-white">Mercado</p>
                   <template v-slot:actions>
-                    <v-icon color="white  ">
-                      mdi-window-minimize
-                    </v-icon>
+                    <v-icon color="white" icon="mdi-window-minimize"></v-icon>
                   </template>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content class="out_of_margins ml-n5">
-                  <v-carousel hide-delimiters height="400" class="rounded">
+                </v-expansion-panel-title>
+                <v-expansion-panel-text class="out_of_margins ml-n5">
+                  <v-carousel hide-delimiter-background color="white" :show-arrows="false" height="410" class="rounded">
                     <v-carousel-item v-for="(article,i) in articles" :key="i" >
-                        <v-card color="black">
-                          <v-img v-if=" article.acf != 'false'" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url" height="250"></v-img>
-                          <v-card-title class="text-h6 white--text">
-                              <v-row class="fill-height flex-column" justify="space-between">
-                                <div>
-                                  <p class="text-body-1 text-left" color="#E9E9E9">
-                                    <v-icon small color="#E9E9E9">
-                                      mdi-calendar
-                                    </v-icon>
-                                    {{ article.attributes.createdAt.substr(0,10) }}
-                                  </p>
-                                </div>
-                                <p class="text-left font-weight-bold">
-                                    {{ article.attributes.titulo }}
-                                </p>
-                                <v-btn plain @click.stop="dialog = true" text color="#FF4E48" class="justify-start ml-n5">
-                                  <v-icon>mdi-plus</v-icon>
-                                  Ler mais
-                                </v-btn>
-                              </v-row>
-                            </v-card-title>
-                        </v-card>
-                        <v-dialog v-model="dialog" max-width="790">
-                          <v-card>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn plain color="#FF4E48" text @click="dialog = false">
-                                <v-icon>mdi-close</v-icon>
-                              </v-btn>
-                            </v-card-actions>
-  
-                            <v-card flat>
-                              <v-row no-gutters class="justify-center">
-                              <v-img class="rounded-lg" max-width="690" max-height="350" :src="article.attributes.media.data[0].attributes.url"></v-img>
-                              </v-row>
-                            </v-card>
-  
-                            <v-card-title class="text-body-1">
-                                <p class="text-body-1 ml-6">
-                                  <v-icon small>
-                                    mdi-calendar
-                                  </v-icon>
-                                  {{ article.attributes.createdAt.substr(0,10) }}&nbsp;&nbsp;&nbsp;
-                                </p>
-  
-                                <p class="text-body-1 first_color">
-                                <v-icon small color="#FF4E48">
-                                  mdi-tag
+                      <v-card color="black">
+                        <v-img v-if="article.attributes.media != null" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url" height="220" cover></v-img>
+                        <v-card-title class="text-h6 white--text mt-3 ml-3">
+                          <v-row class="fill-height flex-column" justify="space-between">
+                            <div>
+                              <p class="text-body-1 text-left" color="#E9E9E9">
+                                <v-icon small color="#E9E9E9">
+                                  mdi-calendar
                                 </v-icon>
-                                    {{ article.attributes.categoria.data.categoria}}
-                                </p>
-                            </v-card-title>
-  
-                            <v-card-title class="text-h4 mx-6 mt-n5">
-                                {{ article.attributes.titulo }}
-                            </v-card-title>
-  
-                            <v-card-text class="text-left">
-                              <p class="text-body-1 font-weight-medium ml-6">
-                                {{ article.attributes.descricao }}
+                                {{ article.attributes.createdAt.substr(0,10) }}
                               </p>
-                            </v-card-text>
+                            </div>
+                            <p class="text-left font-weight-bold" style="white-space:initial;">
+                                {{ article.attributes.titulo.substring(0,50) }}
+                            </p>
+                          </v-row>
+                        </v-card-title>
+                        <v-card-actions class="text-h6 mt-2 white--text justify-center">
+                          <v-btn  @click.stop="dialog = true" variant="outlined" color="#FF4E48">
+                            <v-icon>mdi-plus</v-icon>
+                            Ler mais
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                      <v-dialog v-model="dialog" max-width="790">
+                        <v-card >
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="#FF4E48" @click="dialog = false" icon="mdi-close"></v-btn>
+                          </v-card-actions>
+                          
+                          <div class="d-flex justify-center">
+                            <v-img class="rounded-lg" max-width="690" max-height="350" v-if="article.attributes.media != null" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url"></v-img>
+                          </div>
+
+                          <v-card-title class="text-body-1 ml-6 my-3">
+                            <span class="text-body-1">
+                              <v-icon small>
+                                mdi-calendar
+                              </v-icon>
+                              {{ article.attributes.createdAt.substr(0,10) }}&nbsp;&nbsp;&nbsp;
+                            </span>
+                            <span class="text-body-1 first_color">
+                              <v-icon small color="#FF4E48">
+                                mdi-tag
+                              </v-icon>
+                              {{ article.attributes.categoria.data.attributes.tipo }}
+                            </span>
+                          </v-card-title>
+
+                          <v-card-title class="text-h4 ml-6">
+                            {{ article.attributes.titulo }}
+                          </v-card-title>
+
+                          <v-card-text class="text-h6 ml-5 text-grey">
+                            {{ article.attributes.descricao }}
+                          </v-card-text>
                         </v-card>
                       </v-dialog>
                     </v-carousel-item>
-  
                   </v-carousel>
-                </v-expansion-panel-content>
+                </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>        
           </v-col>
@@ -195,14 +179,14 @@
                     {{ article.attributes.autor.data.attributes.nome }}
                   </v-card-text>
                   
-                    <v-card-title class="mt-n3 font-weight-black text-h4 text-left">
+                    <v-card-title class="title_article mt-n3 font-weight-black text-h4 text-left">
                       <router-link :to="'artigo/' + article.attributes.slug">
                         {{ article.attributes.titulo }}
                       </router-link>
                     </v-card-title>
   
                   <v-card-subtitle class="text-h6 text-left">
-                    {{ article.attributes.descricao.substr(0, 200) }}
+                    {{ article.attributes.descricao }}
                   </v-card-subtitle>
   
                   <v-card-text class="text-body-1 text-left first_color">
@@ -276,7 +260,7 @@
   }
   
   /* Change to default site color */
-  .v-window-item .v-card-title:hover, .first_color{
+  .title_article:hover, .carousel_principal:hover .title_article,  .first_color{
     color: #FF4E48 !important;
   }
 
@@ -284,7 +268,7 @@
     border-color: #FF4E48 !important;
   }
   
-  .v-application .primary{
+  .v-application .primary, .carousel_principal .v-window__right, .carousel_principal .v-window__left{
     background-color: #FF4E48 !important;
   }
   
@@ -304,7 +288,6 @@
   .v-tabs-bar, .transparent_color{
     background-color: transparent !important;
   }
-  
   
   </style>
   

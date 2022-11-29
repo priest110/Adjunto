@@ -335,11 +335,6 @@ a{
   color: inherit !important;
 }
 
-/* Change to default site color */
-.v-window-item .v-card-title:hover, .first_color{
-  color: #FF4E48 !important;
-}
-
 .categories_divider{
   border-color: #FF4E48 !important;
 }
