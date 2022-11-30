@@ -98,12 +98,12 @@
               {{ article.attributes.descricao }}
             </v-card-text>
           
-            <v-divider v-if="(hashtags != null)"></v-divider>
+            <v-divider v-if="(article.attributes.hashtags != null)"></v-divider>
 
-            <v-card-title v-if="hashtags != null">
+            <v-card-title v-if="article.attributes.hashtags != null">
               &nbsp;
-              <span v-for="(tag, i) in hashtags" :key="i" class="first_color">
-                #{{tag}}&nbsp;
+              <span v-for="(tag, i) in article.attributes.hashtags.split(',')" :key="i" class="first_color">
+                #{{tag}}
               </span>
             </v-card-title> 
           </v-card>
@@ -114,7 +114,7 @@
                 <v-expansion-panel-title color="#FF4E48" disable-icon-rotate>
                   <p class="text-h5 text-white">Comentários</p>
                   <template v-slot:actions>
-                    <v-icon color="">
+                    <v-icon color="white">
                       mdi-window-minimize
                     </v-icon>
                   </template>
@@ -165,8 +165,8 @@
                       </v-btn>
                     </v-row>                
                   </v-form>
-                  <v-list v-if="article.attributes.comentarios > 0">
-                    <v-list-item v-for="(comment, i) in article.attributes.comentarios" :key="i">
+                  <v-list v-if="article.attributes.comentarios.data.attributes.length > 0">
+                    <v-list-item v-for="(comment, i) in article.attributes.comentarios.data.attributes" :key="i">
                       <v-card flat> 
                         <v-row class="mt-2">
                           <v-col cols="2">
@@ -199,10 +199,10 @@
           <v-card class="mb-5">
             <v-expansion-panels v-model="plane2" flat>
               <v-expansion-panel>
-                <v-expansion-panel-title disable-icon-rotate>
-                  <p class="text-h5 mb-1">Adicionar comentário</p>
+                <v-expansion-panel-title color="#FF4E48" disable-icon-rotate>
+                  <p class="text-h5 mb-1 text-white">Adicionar comentário</p>
                   <template v-slot:actions>
-                    <v-icon color="">
+                    <v-icon color="white">
                       mdi-window-minimize
                     </v-icon>
                   </template>
@@ -214,17 +214,18 @@
                   <v-form id="form_comment">
                     <v-row>
                       <v-col>
-                        <v-text-field name="nome" color="#FF4E48" outlined label="Nome"></v-text-field>
+                        <v-text-field name="nome" outlined label="Nome"></v-text-field>
                       </v-col>
                       <v-col>
-                        <v-text-field name="email" color="#FF4E48" outlined label="Email"></v-text-field>
+                        <v-text-field name="email" outlined label="Email"></v-text-field>
                       </v-col>
                     </v-row>
-                    <v-textarea counter :rules="comment_rules" name="comentario" color="#FF4E48" outlined label="Escreve o teu comentário"></v-textarea>
+                    <v-textarea counter :rules="comment_rules" name="comentario" outlined label="Escreve o teu comentário"></v-textarea>
                     <v-row class="justify-start">
-                      <v-btn text color="#FF4E48" class="ml-3 mb-3" >
-                        Comentar 
-                        <v-icon>mdi-android-messages</v-icon>
+                      <v-btn variant="text" color="#FF4E48" class="mr-n4" @click="change">
+                        Responder 
+                        &nbsp;
+                        <v-icon> mdi-message-text-outline </v-icon>
                       </v-btn>
                     </v-row>                
                   </v-form>
@@ -234,15 +235,15 @@
           </v-card>
 
           <v-card class="mb-5">
-            <v-card-title class="first_color">
-              <v-btn icon class="rounded" outlined color="#FF4E48">
-                <v-icon>mdi-arrow-left</v-icon>
+            <v-card-title class="d-flex align-center first_color">
+              <v-btn icon class="rounded" outlined color="white">
+                <v-icon color="#FF4E48">mdi-arrow-left</v-icon>
               </v-btn>
               &nbsp; Artigo anterior
               <v-spacer></v-spacer>
               Artigo seguinte &nbsp; 
-              <v-btn icon class="rounded" outlined color="#FF4E48">
-                <v-icon>mdi-arrow-right</v-icon>
+              <v-btn icon class="rounded" outlined color="white">
+                <v-icon color="#FF4E48">mdi-arrow-right</v-icon>
               </v-btn>
             </v-card-title>
           </v-card>
@@ -288,10 +289,9 @@ export default {
       this.categories = categories_aux.data.data
       var article_aux = await axios('http://localhost:1337/api/artigos/' + this.$route.path.substring(1).split('/').pop())
       this.article = article_aux.data.data
+      console.log(this.article)
       var autor_aux = await axios('http://localhost:1337/api/autors/' + this.article.attributes.autor.data.id + '?populate=*')
       this.autor = autor_aux.data.data
-      this.hashtags = this.article.attributes.hashtags.map(obj => obj.hashtag)
-      console.log(this.autor.attrib)
       this.valid = true
     },
 

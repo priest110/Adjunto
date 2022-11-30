@@ -36,9 +36,6 @@
         "audios"
       ]
     },
-    "comentarios": {
-      "type": "json"
-    },
     "likes": {
       "type": "integer",
       "default": 0
@@ -48,13 +45,19 @@
       "relation": "oneToOne",
       "target": "api::autor.autor"
     },
-    "hashtags": {
-      "type": "json"
-    },
     "slug": {
       "type": "string",
       "required": true,
       "unique": true
+    },
+    "comentarios": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comentario.comentario"
+    },
+    "hashtags": {
+      "type": "text",
+      "default": "Hahtags têm de estar separados por ',', por exemplo: Reis,GangdosVelhinhos,UniaodeMIEI"
     }
   }
 }

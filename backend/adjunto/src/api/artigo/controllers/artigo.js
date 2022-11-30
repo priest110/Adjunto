@@ -16,6 +16,7 @@ module.exports = createCoreController('api::artigo.artigo', ({strapi}) => ({
         })
         const sanitizedEntity = await this.sanitizeOutput(entity)
         sanitizedEntity['categoria'] = entity['categoria']
+        sanitizedEntity['comentarios'] = entity['comentarios']
         sanitizedEntity['autor'] = entity['autor']
 
         return this.transformResponse(sanitizedEntity)
