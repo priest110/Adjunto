@@ -143,7 +143,7 @@
                       <v-icon> mdi-message-text-outline </v-icon>
                     </v-btn>
                   </v-card-actions>
-                  <v-form v-else id="form_answer">
+                  <v-form v-else id="form_answer" class="my-5">
                     <v-row>
                       <v-col>
                         <v-text-field name="nome" outlined label="Nome"></v-text-field>
@@ -154,38 +154,36 @@
                     </v-row>
                     <v-textarea counter :rules="comment_rules" name="comentario" outlined label="Escreve o teu comentário"></v-textarea>
                     <v-row class="justify-start">
-                      <v-btn color="#FF4E48" class="ml-3 mb-3" >
+                      <v-btn color="#FF4E48" class="ml-3" >
                         <span class="text-white">Comentar</span> 
                         &nbsp;
                         <v-icon color="white"> mdi-message-text-outline </v-icon>
                       </v-btn>
-                      <v-btn text class="ml-3 mb-3" @click="change()">
+                      <v-btn text class="ml-3" @click="change()">
                         Cancelar
                         <v-icon>mdi-exit</v-icon>
                       </v-btn>
                     </v-row>                
                   </v-form>
-                  <v-list v-if="article.attributes.comentarios.data.attributes.length > 0">
-                    <v-list-item v-for="(comment, i) in article.attributes.comentarios.data.attributes" :key="i">
-                      <v-card flat> 
-                        <v-row class="mt-2">
+                  <v-list v-if="article.attributes.comentarios.data.length > 0">
+                    <v-list-item v-for="(comment, i) in article.attributes.comentarios.data" :key="i">
+                      <v-card flat class="ml-10"> 
+                        <v-row>
                           <v-col cols="2">
-                            <v-avatar tile height="50" width="50" class="ml-4 rounded-lg">
-                              <v-img v-if="post.acf != 'false'" :src="post.acf.imagem.url"></v-img>
-                            </v-avatar>
+                            <v-avatar tile v-if="autor.attributes.avatar != null" :image="'http://localhost:1337' + autor.attributes.avatar.data.attributes.url" size="80" class="ml-5 rounded-lg"></v-avatar>
                           </v-col>
-                          <v-col class="ml-n4">
-                            <v-card-title class="mt-n5 first_color">
+                          <v-col class="ml-n10">
+                            <v-card-subtitle class="text-h6 first_color">
                               Autor
-                            </v-card-title>
-                            <v-card-title class="mt-n10 text-h6 text-left">
+                            </v-card-subtitle>
+                            <v-card-title class="text-h6">
                               {{ autor.attributes.nome }}
                             </v-card-title>
                           </v-col>
                         </v-row>
-                        <v-row class="ml-0 mt-n7">
-                          <v-card-text class="text-left ">
-                            {{ autor.attributes.descricao }}
+                        <v-row>
+                          <v-card-text class="text-left ml-3">
+                            <p style="white-space:initial; overflow-wrap:anywhere;">{{comment.attributes.descricao}}</p>
                           </v-card-text>
                         </v-row>
                       </v-card>

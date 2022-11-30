@@ -36,7 +36,7 @@
           </v-col>
           <v-col cols="6" >
             <v-carousel hide-delimiter-background hide-delimiters show-arrows="hover" class="carousel_principal">
-              <v-carousel-item v-for="(article, i) in articles" :key="i" >
+              <v-carousel-item v-for="(article, i) in articles.slice(0,10)" :key="i" >
                 <router-link :to="'artigo/' + article.attributes.slug">
                   <v-card>
                     <v-img height="500" cover class="rounded-lg" v-if="article.attributes.media != null" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
@@ -84,7 +84,7 @@
                 </v-expansion-panel-title>
                 <v-expansion-panel-text class="out_of_margins ml-n5">
                   <v-carousel hide-delimiter-background color="white" :show-arrows="false" height="410" class="rounded">
-                    <v-carousel-item v-for="(article,i) in articles" :key="i" >
+                    <v-carousel-item v-for="(article,i) in articles.filter(art => art.attributes.categoria.data.attributes.tipo == 'Mercado').slice(0,10)" :key="i" >
                       <v-card color="black">
                         <v-img v-if="article.attributes.media != null" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url" height="220" cover></v-img>
                         <v-card-title class="text-h6 white--text mt-3 ml-3">
