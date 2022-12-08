@@ -86,7 +86,7 @@
               </span>
               <v-spacer></v-spacer>
               <span>
-                <v-btn :disabled="disabled_active" :input-value="like_active" icon="mdi-heart-outline" class="first_color mr-n1 mt-n1" variant="text" @click="change_likes()"></v-btn>
+                <v-btn :disabled="disabled_active" :active="like_active" icon="mdi-heart-outline" class="first_color mr-n1 mt-n1" variant="text" @click="change_likes()"></v-btn>
                 {{ article.attributes.likes }}
               </span>
               &nbsp;
@@ -120,75 +120,69 @@
                   </template>
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
-                  <v-row class="mt-2">
-                    <v-col cols="2">
-                      <v-avatar tile v-if="autor.attributes.avatar != null" :image="'http://localhost:1337' + autor.attributes.avatar.data.attributes.url" size="80" class="ml-5 rounded-lg"></v-avatar>
-                    </v-col>
-                    <v-col class="ml-n10">
-                      <v-card-subtitle class="text-h6 first_color">
-                        Autor
-                      </v-card-subtitle>
-                      <v-card-title class="text-h6">
-                        {{ autor.attributes.nome }}
-                      </v-card-title>
-                    </v-col>
-                  </v-row>
-                  <v-card-text class="text-left">
-                    {{ autor.attributes.bio }}
-                  </v-card-text>
-                  <v-card-actions v-if="!answer_active" class="my-n3">
-                    <v-btn color="#FF4E48" class="mr-n4" @click="change">
-                      Responder 
-                      &nbsp;
-                      <v-icon> mdi-message-text-outline </v-icon>
-                    </v-btn>
-                  </v-card-actions>
-                  <v-form v-else id="form_answer" class="my-5">
-                    <v-row>
-                      <v-col>
-                        <v-text-field name="nome" outlined label="Nome"></v-text-field>
+                  <div v-if="article.attributes.comentarios.data.length > 0" v-for="(comment, i) in article.attributes.comentarios.data" :key="i">
+                    <v-row class="mt-2" >
+                      <v-col cols="1">
+                        <v-avatar tile :image="'http://localhost:1337' + comment.attributes.avatar" size="60" class="rounded-lg"></v-avatar>
                       </v-col>
-                      <v-col>
-                        <v-text-field name="email" outlined label="Email"></v-text-field>
+                      <v-col class="pt-0 pl-0">
+                        <v-card-title class="text-h6">
+                          {{ comment.attributes.author }}
+                        </v-card-title>
+                        <v-card-text>
+                          {{ comment.attributes.descricao }}
+                        </v-card-text>
                       </v-col>
                     </v-row>
-                    <v-textarea counter :rules="comment_rules" name="comentario" outlined label="Escreve o teu comentário"></v-textarea>
-                    <v-row class="justify-start">
-                      <v-btn color="#FF4E48" class="ml-3" >
-                        <span class="text-white">Comentar</span> 
+                    <v-card-actions v-if="!answer_active" class="my-n3">
+                      <v-btn color="#FF4E48" class="mr-n4" @click="change">
+                        Responder 
                         &nbsp;
-                        <v-icon color="white"> mdi-message-text-outline </v-icon>
+                        <v-icon> mdi-message-text-outline </v-icon>
                       </v-btn>
-                      <v-btn text class="ml-3" @click="change()">
-                        Cancelar
-                        <v-icon>mdi-exit</v-icon>
-                      </v-btn>
-                    </v-row>                
-                  </v-form>
-                  <v-list v-if="article.attributes.comentarios.data.length > 0">
-                    <v-list-item v-for="(comment, i) in article.attributes.comentarios.data" :key="i">
-                      <v-card flat class="ml-10"> 
-                        <v-row>
-                          <v-col cols="2">
-                            <v-avatar tile v-if="autor.attributes.avatar != null" :image="'http://localhost:1337' + autor.attributes.avatar.data.attributes.url" size="80" class="ml-5 rounded-lg"></v-avatar>
-                          </v-col>
-                          <v-col class="ml-n10">
-                            <v-card-subtitle class="text-h6 first_color">
-                              Autor
-                            </v-card-subtitle>
-                            <v-card-title class="text-h6">
-                              {{ autor.attributes.nome }}
-                            </v-card-title>
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <v-card-text class="text-left ml-3">
-                            <p style="white-space:initial; overflow-wrap:anywhere;">{{comment.attributes.descricao}}</p>
-                          </v-card-text>
-                        </v-row>
-                      </v-card>
-                    </v-list-item>
-                  </v-list>
+                    </v-card-actions>
+                    <v-form v-else id="form_answer" class="my-5">
+                      <v-row>
+                        <v-col>
+                          <v-text-field name="nome" outlined label="Nome"></v-text-field>
+                        </v-col>
+                        <v-col>
+                          <v-text-field name="email" outlined label="Email"></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-textarea counter :rules="comment_rules" name="comentario" outlined label="Escreve o teu comentário"></v-textarea>
+                      <v-row class="justify-start">
+                        <v-btn color="#FF4E48" class="ml-3" >
+                          <span class="text-white">Comentar</span> 
+                          &nbsp;
+                          <v-icon color="white"> mdi-message-text-outline </v-icon>
+                        </v-btn>
+                        <v-btn text class="ml-3" @click="change()">
+                          Cancelar
+                          <v-icon>mdi-exit</v-icon>
+                        </v-btn>
+                      </v-row>                
+                    </v-form>
+                    <v-list v-if="comment.attributes.comentarios.data.length > 0">
+                      <v-list-item v-for="(secundary_comment, i) in comment.attributes.comentarios.data" :key="i">
+                        <v-card flat class="ml-10"> 
+                          <v-row>
+                            <v-col cols="1">
+                              <v-avatar tile :image="('http://localhost:1337' + secundary_comment.attributes.avatar)" size="60" class="rounded-lg"></v-avatar>
+                            </v-col>
+                            <v-col class="pt-0 pl-1">
+                              <v-card-title class="text-h6">
+                                {{ secundary_comment.attributes.author }}
+                              </v-card-title>
+                              <v-card-text>
+                                <p style="white-space:initial; overflow-wrap:anywhere;">{{secundary_comment.attributes.descricao}}</p>
+                              </v-card-text>
+                            </v-col>
+                          </v-row>
+                        </v-card>
+                      </v-list-item>
+                    </v-list>
+                  </div>
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -221,7 +215,7 @@
                     <v-textarea counter :rules="comment_rules" name="comentario" outlined label="Escreve o teu comentário"></v-textarea>
                     <v-row class="justify-start">
                       <v-btn variant="text" color="#FF4E48" class="mr-n4" @click="change">
-                        Responder 
+                        Comentar
                         &nbsp;
                         <v-icon> mdi-message-text-outline </v-icon>
                       </v-btn>
@@ -294,15 +288,18 @@ export default {
     },
 
     async fetch_likes(like_active){
-      const article = this.post
+      const article = {}
+      var likes
 
       if(!like_active)
-        article['acf']['gostos'] = parseInt(article['acf']['gostos']) + 1
+        likes = parseInt(this.article['attributes']['likes']) + 1
       if(like_active)
-        article['acf']['gostos'] = parseInt(article['acf']['gostos']) - 1
+        likes = parseInt(this.article['attributes']['likes']) - 1
+
+      article['data'] = {"likes": likes}
       
-      const response = await axios.post("https://adjunto.pt/wp-json/artigos/v1/post", article);
-      console.log("Response" + response.data)
+      const response = await axios.put("http://localhost:1337/api/artigos/" + this.article['id'], article)
+      this.article['attributes']['likes'] = response['data']['data']['attributes']['likes']
     },
 
     change(){
