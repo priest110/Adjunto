@@ -8,5 +8,10 @@ module.exports = {
           auth: false,
         },
       },
+      { 
+        method: 'GET',
+        path: '/artigos/categoria/:categoria',
+        handler: 'artigo.findByCategory',
+      }
     ],
   };

@@ -120,5 +120,17 @@ module.exports = createCoreController('api::artigo.artigo', ({strapi}) => ({
         sanitizedEntity['autor'] = entity['autor']
 
         return this.transformResponse(sanitizedEntity)
+    },
+    async findByCategory(ctx) {
+        const { categoria } = ctx.params
+        console.log(categoria)
+
+        const entity = await strapi.db.query('api::artigo.artigo').findMany({
+            where: { categoria },
+            populate: true
+        })
+
+        const sanitizedEntity = await this.sanitizeOutput(entity)
+        return this.transformResponse(sanitizedEntity)
     }
 }));
