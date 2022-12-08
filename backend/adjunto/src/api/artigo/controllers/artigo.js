@@ -122,11 +122,16 @@ module.exports = createCoreController('api::artigo.artigo', ({strapi}) => ({
         return this.transformResponse(sanitizedEntity)
     },
     async findByCategory(ctx) {
-        const { categoria } = ctx.params
-        console.log(categoria)
+        const { tipo } = ctx.params
+        console.log(ctx.params)
+        var cat = {"categoria":{
+                tipo
+            }
+        }
+        console.log(cat)
 
         const entity = await strapi.db.query('api::artigo.artigo').findMany({
-            where: { categoria },
+            where:  cat ,
             populate: true
         })
 

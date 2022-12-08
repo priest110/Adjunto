@@ -134,8 +134,8 @@
                         </v-card-text>
                       </v-col>
                     </v-row>
-                    <v-card-actions v-if="!answer_active" class="my-n3">
-                      <v-btn color="#FF4E48" class="mr-n4" @click="change">
+                    <v-card-actions v-if="(answer_active[i] == null || !answer_active[i])" class="my-n3">
+                      <v-btn color="#FF4E48" class="mr-n4" @click="change(i)">
                         Responder 
                         &nbsp;
                         <v-icon> mdi-message-text-outline </v-icon>
@@ -157,7 +157,7 @@
                           &nbsp;
                           <v-icon color="white"> mdi-message-text-outline </v-icon>
                         </v-btn>
-                        <v-btn text class="ml-3" @click="change()">
+                        <v-btn text class="ml-3" @click="change(i)">
                           Cancelar
                           <v-icon>mdi-exit</v-icon>
                         </v-btn>
@@ -227,16 +227,16 @@
           </v-card>
 
           <v-card class="mb-5">
-            <v-card-title class="d-flex align-center first_color">
-              <v-btn icon class="rounded" outlined color="white">
-                <v-icon color="#FF4E48">mdi-arrow-left</v-icon>
-              </v-btn>
-              &nbsp; Artigo anterior
+            <v-card-title class="d-flex align-center text-white">
+              <router-link v-if="previous_article != null" :to="previous_article.attributes.slug">
+                <v-btn :disabled="!pagination_active" icon="mdi-arrow-left" class="rounded" color="#FF4E48"></v-btn>
+              </router-link>
+              &nbsp; <span class="first_color">Artigo anterior</span>
               <v-spacer></v-spacer>
-              Artigo seguinte &nbsp; 
-              <v-btn icon class="rounded" outlined color="white">
-                <v-icon color="#FF4E48">mdi-arrow-right</v-icon>
-              </v-btn>
+              <span class="first_color">Artigo seguinte</span> &nbsp; 
+              <router-link v-if="previous_article != null" :to="next_article.attributes.slug">
+                <v-btn :disabled="!pagination_active" icon="mdi-arrow-right" class="rounded" color="#FF4E48"></v-btn>
+              </router-link>
             </v-card-title>
           </v-card>
         </v-col>
@@ -255,6 +255,8 @@ export default {
       article: {},
       autor: {},
       hashtags: [],
+      next_article: null,
+      previous_article: null,
       tab: null,
       dialog: false,
       valid: false,
@@ -264,19 +266,29 @@ export default {
         v => !!v || 'Campo obrigatório',
         v => (v && v.length <= 30) || 'No máximo 1000 caracteres',
       ],
-      answer_active: false,
+      answer_active: [],
       like_active: false,
       disabled_active: false,
-      type: 'guest',
+      pagination_active: false
     }
   },
   
   created() {
-    this.fetch_data()
+    // watch the params of the route to fetch the data again
+    this.$watch(
+      () => this.$route.params,
+      () => {
+        this.fetch_data()
+      },
+      // fetch the data when the view is created and the data is
+      // already being observed
+      { immediate: true }
+    )
   },
 
   methods: {
     async fetch_data(){
+      this.valid = false
       var categories_aux = await axios('http://localhost:1337/api/categorias')
       this.categories = categories_aux.data.data
       var article_aux = await axios('http://localhost:1337/api/artigos/' + this.$route.path.substring(1).split('/').pop())
@@ -285,6 +297,23 @@ export default {
       var autor_aux = await axios('http://localhost:1337/api/autors/' + this.article.attributes.autor.data.id + '?populate=*')
       this.autor = autor_aux.data.data
       this.valid = true
+      var articles_by_category = await axios('http://localhost:1337/api/artigos/categoria/' + this.article.attributes.categoria.data.attributes.tipo)
+      articles_by_category = articles_by_category.data.data
+      console.log(articles_by_category)
+      const index = articles_by_category.map(x => x.id).indexOf(this.article.id)
+      if (index < articles_by_category.length - 1){
+        if(index > 0)
+          this.previous_article = articles_by_category[index - 1]
+        else
+          this.previous_article = articles_by_category[articles_by_category.length - 1]
+        this.next_article = articles_by_category[index + 1]
+        this.pagination_active = true
+      }
+      else if (index == articles_by_category.length - 1 && articles_by_category.length > 1 ){
+        this.previous_article = articles_by_category[index - 1]
+        this.next_article = articles_by_category[0]
+        this.pagination_active = true
+      }
     },
 
     async fetch_likes(like_active){
@@ -302,8 +331,10 @@ export default {
       this.article['attributes']['likes'] = response['data']['data']['attributes']['likes']
     },
 
-    change(){
-      this.answer_active = !this.answer_active
+    change(i){
+      if(this.answer_active[i] == null)
+        this.answer_active.push(false)
+      this.answer_active[i] = !this.answer_active[i]
     },
 
     async change_likes(){
