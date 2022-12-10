@@ -299,7 +299,6 @@ export default {
       this.valid = true
       var articles_by_category = await axios('http://localhost:1337/api/artigos/categoria/' + this.article.attributes.categoria.data.attributes.tipo)
       articles_by_category = articles_by_category.data.data
-      console.log(articles_by_category)
       const index = articles_by_category.map(x => x.id).indexOf(this.article.id)
       if (index < articles_by_category.length - 1){
         if(index > 0)

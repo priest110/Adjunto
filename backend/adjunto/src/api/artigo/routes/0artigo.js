@@ -10,7 +10,7 @@ module.exports = {
       },
       { 
         method: 'GET',
-        path: '/artigos/categoria/:tipo',
+        path: '/artigos/categoria/:slug',
         handler: 'artigo.findByCategory',
       }
     ],

@@ -244,7 +244,7 @@
         var categories_aux = await axios('http://localhost:1337/api/categorias')
         this.categories = categories_aux.data.data
         var articles_aux = await axios('http://localhost:1337/api/artigos?populate=*')
-        this.articles = articles_aux.data.data
+        this.articles = articles_aux.data.data.reverse()
         this.valid = true
       }
     }
