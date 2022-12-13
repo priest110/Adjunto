@@ -63,64 +63,32 @@
             </v-card>
           </router-link>
         </v-col>
-        <v-col cols="2">    
-        </v-col>
+        <v-col cols="2"/>
       </v-row>
-      <v-row class="justify-center mb-3" v-for="(article,i) in articles" :key="i">
-        <v-col cols="2"></v-col>
-        <v-col cols="3">
-          <v-card height="400" flat>
-            <v-img height="250" cover class="rounded-lg" v-if="articles[0].attributes.media != null" :src="'http://localhost:1337' + articles[0].attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >       
-              <v-card-title style="height:100%;" class="d-flex align-end text-body-1 text-left text-white" >
+      <v-row class="justify-center mb-3" v-for="i in Math.ceil((articles.length - 1)/3)">
+        <v-col cols="2" v-for="(article, index) in articles.slice(Math.floor(articles.length/3) * i + 1, Math.floor(articles.length/3) * i + 1 + 3)" :key="index">
+          <v-card  height="400" flat>
+            <v-img height="250" cover class="rounded-lg" v-if="articles[0].attributes.media != null" :src="'http://localhost:1337' + article.attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >       
+              <v-card-title style="height:100%;" class="d-flex align-end text-body-1 text-left text-white">
                 <p>
                   <v-icon small>
                     mdi-calendar
                   </v-icon>
-                  {{ articles[0].attributes.createdAt.substr(0,10) }}
+                  {{ article.attributes.createdAt.substr(0,10) }}
                   <v-icon small>
                     mdi-account
                   </v-icon>
-                  {{ articles[0].attributes.autor.data.attributes.nome }}
+                  {{ article.attributes.autor.data.attributes.nome }}
                 </p>
               </v-card-title>
             </v-img>
-            <v-card-title class="text-h5 title_article mt-2 text-left font-weight-bold" style="white-space:initial; overflow-wrap:anywhere;">
-              {{ articles[0].attributes.titulo }}
-            </v-card-title>
+            <router-link :to="'../artigo/' + article.attributes.slug">
+              <v-card-title class="text-h5 title_article mt-2 text-left font-weight-bold" style="white-space:initial; overflow-wrap:anywhere;">
+                {{ article.attributes.titulo }}
+              </v-card-title>
+            </router-link>
           </v-card>
         </v-col>
-        <v-col cols="3">
-          <v-img height="500" cover class="rounded-lg" v-if="articles[0].attributes.media != null" :src="'http://localhost:1337' + articles[0].attributes.media.data[0].attributes.url" gradient="to top, rgba(10,0,0,.8), rgba(0,0,0,0)" >
-                <v-card-title class="text-h4 text-white">
-                  <v-row align="end" style="height: 500px;">
-                    <v-col>
-                      <div>
-                        <p class="text-body-1 text-left" color="#E9E9E9">
-                          <v-icon small color="#E9E9E9">
-                            mdi-calendar
-                          </v-icon>
-                          {{ articles[0].attributes.createdAt.substr(0,10) }}
-                          <v-icon small color="#E9E9E9">
-                            mdi-account
-                          </v-icon>
-                          {{ articles[0].attributes.autor.data.attributes.nome }}
-                        </p>
-                      </div>
-                      <p class="title_article my-2 text-left font-weight-bold">
-                        {{ articles[0].attributes.titulo }}
-                      </p>
-                      <div class="text-body-1 text-left" color="#E9E9E9">
-                        <v-icon small color="#E9E9E9">
-                          mdi-tag
-                        </v-icon>
-                        {{ category.attributes.tipo }}
-                      </div>
-                    </v-col>
-                  </v-row>
-                </v-card-title>
-              </v-img>
-        </v-col>
-        <v-col cols="2"></v-col>
       </v-row>
     </div>
   </div>
